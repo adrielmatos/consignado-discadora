@@ -1,0 +1,6 @@
+# agente Windows — discadora via Phone Link
+# pywinauto só instala/funciona no Windows (usa UI Automation/COM).
+# Em Linux/macOS rode os testes com o discador simulado (eles não importam pywinauto).
+requests>=2.31
+pywinauto>=0.6.8 ; sys_platform == "win32"
+# para os testes: pip install pytest

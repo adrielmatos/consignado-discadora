@@ -1,0 +1,22 @@
+# Copie para config.toml (mesma pasta do agente). Também funciona por variáveis de ambiente
+# (AG_SUPABASE_URL, AG_CHAVE, AG_EMAIL_AGENTE, AG_MODO, AG_POLL_S, AG_TIMEOUT_LIGACAO_S, AG_SECO).
+
+[agente]
+url = "https://SEU-PROJETO.supabase.co"
+chave = "service_role_..."        # NÃO commite. Use variável de ambiente em produção.
+email_agente = "maria@suafinanceira.com.br"
+modo = "claimed"                   # claimed = executa o que o painel pediu | auto = puxa da fila
+poll_s = 4
+timeout_ligacao_s = 180            # espera máxima pelo fim da chamada detectado na UI
+expirar_jobs_min = 6               # job sem reporte volta para a fila
+seco = false                       # true = não toca na janela
+
+# Ajuste os nomes conforme a versão do seu Phone Link (rode --inspect).
+[seletores]
+janela = "(?i)phone link|vincular"
+aba_chamadas = "(?i)^calls$|chamadas|ligar"
+teclado = "(?i)keypad|teclado|marcar"
+campo_numero = "(?i)enter phone|search|number|n[uú]mero"
+botao_ligar = "(?i)^call$|^ligar$|place call"
+botao_encerrar = "(?i)^end$|hang|encerrar|desligar"
+em_chamada = "(?i)in call|chamada em andamento|mic|muted"

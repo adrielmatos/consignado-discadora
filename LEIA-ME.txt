@@ -1,0 +1,115 @@
+PACOTE COMPLETO — Discadora de Consignado (Vercel + Supabase + GitHub + Phone Link)
+Gerado em 27/09/2026 · repositório no commit 09af965 · 92 arquivos
+  • 65 arquivos do projeto em `consignado-discadora/`
+  • 4 documentos de texto (pacote pronto para colar no chat do modelo, plano de porte, repos pesquisados)
+  • 23 PNGs em `fotos-sistema/` — renders reais do app rodando, não mockup
+
+COMO USAR
+- Análise sem subir repositório: cole `pacote-para-gemini.md` (ou `pacote-para-gemini-enxuto.md`).
+  É o projeto concatenado com um roteiro de revisão no topo: RLS/segurança, regras do INSS e LGPD,
+  produto vs concorrentes, stack travada (GitHub+Supabase+Vercel+Phone Link) e qualidade das asserções.
+- O modelo vendo as telas: `fotos-sistema/`.
+- Arquivo por arquivo: `consignado-discadora/`.
+
+O QUE FICOU FORA (e por quê)
+- `node_modules/`, `.next/`, `.git/` e `web/.env.local`: gerado ou sensível — não serve para análise.
+
+COMO CONFERIR O QUE ESTÁ DECLARADO
+- `cd web && npm run test:sql`      → 191 asserções em Postgres real, 0 falhas
+- `python3 tools/supabase_guard.py supabase/schema.sql supabase/seed-exemplo.sql supabase/realtime.sql` → OK
+- `cd web && npx tsc --noEmit && npx next build` → limpo
+- `cd agent && python -m pytest -q` → 12 testes
+
+CONTEÚDO
+consignado-discadora/.github/workflows/ci.yml
+consignado-discadora/.gitignore
+consignado-discadora/README.md
+consignado-discadora/agent/README.md
+consignado-discadora/agent/config.example.toml
+consignado-discadora/agent/core.py
+consignado-discadora/agent/phone_link_agent.py
+consignado-discadora/agent/phonelink_win.py
+consignado-discadora/agent/requirements.txt
+consignado-discadora/agent/test_core.py
+consignado-discadora/docs/ANALISE-ak-call-center.md
+consignado-discadora/docs/ANALISE-concorrentes-6.md
+consignado-discadora/docs/FONTES.md
+consignado-discadora/supabase/realtime.sql
+consignado-discadora/supabase/schema.sql
+consignado-discadora/supabase/seed-exemplo.sql
+consignado-discadora/supabase/tests/bootstrap-local.sql
+consignado-discadora/tools/postgres_local.sh
+consignado-discadora/tools/supabase_guard.py
+consignado-discadora/web/.env.example
+consignado-discadora/web/app/ao-vivo.tsx
+consignado-discadora/web/app/api/export/csv/route.ts
+consignado-discadora/web/app/api/leads/route.ts
+consignado-discadora/web/app/auth/callback/route.ts
+consignado-discadora/web/app/campanhas/cadencia.tsx
+consignado-discadora/web/app/campanhas/page.tsx
+consignado-discadora/web/app/campanhas/painel.tsx
+consignado-discadora/web/app/campanhas/roteiros.tsx
+consignado-discadora/web/app/campanhas/tabulacao-campanha.tsx
+consignado-discadora/web/app/crm/agenda.tsx
+consignado-discadora/web/app/crm/esteira.tsx
+consignado-discadora/web/app/crm/page.tsx
+consignado-discadora/web/app/empresa/page.tsx
+consignado-discadora/web/app/empresa/painel.tsx
+consignado-discadora/web/app/equipe/page.tsx
+consignado-discadora/web/app/equipe/painel.tsx
+consignado-discadora/web/app/globals.css
+consignado-discadora/web/app/layout.tsx
+consignado-discadora/web/app/leads/[id]/page.tsx
+consignado-discadora/web/app/leads/[id]/painel.tsx
+consignado-discadora/web/app/leads/form.tsx
+consignado-discadora/web/app/leads/page.tsx
+consignado-discadora/web/app/login/acoes.ts
+consignado-discadora/web/app/login/page.tsx
+consignado-discadora/web/app/operador/page.tsx
+consignado-discadora/web/app/operador/painel-operador.tsx
+consignado-discadora/web/app/operador/tabulacao.tsx
+consignado-discadora/web/app/page.tsx
+consignado-discadora/web/app/relatorios/anuencia.tsx
+consignado-discadora/web/app/relatorios/page.tsx
+consignado-discadora/web/lib/acoes.ts
+consignado-discadora/web/lib/importador.ts
+consignado-discadora/web/lib/supabase/client.ts
+consignado-discadora/web/lib/supabase/server.ts
+consignado-discadora/web/lib/tempo-real.ts
+consignado-discadora/web/lib/tempo.ts
+consignado-discadora/web/lib/tipos.ts
+consignado-discadora/web/middleware.ts
+consignado-discadora/web/next-env.d.ts
+consignado-discadora/web/next.config.mjs
+consignado-discadora/web/package-lock.json
+consignado-discadora/web/package.json
+consignado-discadora/web/scripts/testa-sql.mjs
+consignado-discadora/web/test/importador.test.ts
+consignado-discadora/web/tsconfig.json
+pacote-para-gemini.md
+pacote-para-gemini-enxuto.md
+discar-pelo-celular-PLANO.md
+discadora-github-repos.md
+fotos-sistema/01-dona-painel.png
+fotos-sistema/01b-dona-painel-producao.png
+fotos-sistema/02-crm-esteira.png
+fotos-sistema/02b-crm-agenda.png
+fotos-sistema/03-campanhas-catalogo.png
+fotos-sistema/04-campanha-regras.png
+fotos-sistema/04b-campanha-cadencia.png
+fotos-sistema/05-relatorios-metas.png
+fotos-sistema/05b-relatorios-funil-mapa.png
+fotos-sistema/05c-relatorios-aderencia-gestao.png
+fotos-sistema/06-empresa-cadastro.png
+fotos-sistema/07-ficha-lead-360.png
+fotos-sistema/07b-ficha-lead-historico.png
+fotos-sistema/08-equipe-acessos.png
+fotos-sistema/09-leads-importacao.png
+fotos-sistema/10-operador-fila.png
+fotos-sistema/11-operador-lead.png
+fotos-sistema/12-operador-tabulacao.png
+fotos-sistema/12b-operador-simulador.png
+fotos-sistema/13-operador-carteira.png
+fotos-sistema/14-supervisor-esteira.png
+fotos-sistema/14b-supervisor-monitor.png
+fotos-sistema/15-login.png

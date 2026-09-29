@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS public.leads (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+ALTER TABLE public.leads ADD COLUMN IF NOT EXISTS operador_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
 
 CREATE TABLE IF NOT EXISTS public.historico_chamadas (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,

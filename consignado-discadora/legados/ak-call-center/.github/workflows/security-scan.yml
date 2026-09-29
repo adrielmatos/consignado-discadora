@@ -1,0 +1,37 @@
+name: Security Scan
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+permissions:
+  contents: read
+  security-events: write
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Secret scan
+        shell: bash
+        run: |
+          set -euo pipefail
+          go install github.com/zricethezav/gitleaks/v8@v8.24.2
+          "$(go env GOPATH)/bin/gitleaks" detect --source . --redact --verbose --exit-code 1
+          if git grep -nEI 'VERCEL_TOKEN|OPENAI_API_KEY|NEXT_PUBLIC_(SERVICE_ROLE|SECRET)|sb_(anon|service_role)_' -- ':!package-lock.json' ':!pnpm-lock.yaml' ':!yarn.lock' ':!.github/workflows/security-scan.yml'; then
+            echo "::error::Potential secret pattern found in tracked files."
+            exit 1
+          fi
+      - name: Node setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install
+      - name: Typecheck and build
+        run: npm run build
+      - name: Dependency audit
+        run: npm audit --audit-level=high

@@ -1,0 +1,33 @@
+name: Supabase Guard
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+permissions:
+  contents: read
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Validate migration RLS
+        shell: python
+        run: |
+          import pathlib, re, sys
+          root=pathlib.Path("supabase/migrations")
+          failures=[]
+          for p in root.glob("*.sql"):
+              text=p.read_text(encoding="utf-8",errors="ignore")
+              tables=re.findall(r'create\s+table(?:\s+if\s+not\s+exists)?\s+(?:public\.)?([a-zA-Z_][\w]*)',text,re.I)
+              for table in tables:
+                  pat=r'alter\s+table\s+(?:if\s+exists\s+)?(?:public\.)?'+re.escape(table)+r'\s+enable\s+row\s+level\s+security'
+                  if not re.search(pat,text,re.I):
+                      failures.append(f"{p}: {table} has CREATE TABLE without ENABLE ROW LEVEL SECURITY")
+          if failures:
+              print("\n".join(failures))
+              sys.exit(1)
+          print("RLS migration guard passed.")

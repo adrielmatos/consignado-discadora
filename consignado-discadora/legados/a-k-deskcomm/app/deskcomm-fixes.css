@@ -1,0 +1,9 @@
+/* Stability overrides for the existing Deskcomm UI. No component rewrite. */
+aside{overflow-y:auto;overflow-x:hidden}
+.nav{flex:0 0 auto}
+.asideBottom{margin-top:12px;flex:0 0 auto}
+section{min-width:0}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{min-width:760px}
+aside::-webkit-scrollbar{width:6px}
+aside::-webkit-scrollbar-thumb{background:#2b3c58;border-radius:99px}

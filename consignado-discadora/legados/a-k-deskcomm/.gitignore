@@ -1,0 +1,41 @@
+# Next.js
+.next/
+out/
+.vercel/
+node_modules/
+*.tsbuildinfo
+
+# Environment / secrets
+.env
+.env.*
+.env*.local
+!.env.example
+!.env.template
+
+# Supabase
+.supabase/
+**/.supabase/functions/.env
+supabase/.temp/
+supabase/.branches/
+
+# Logs / OS
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Test output
+coverage/
+playwright-report/
+test-results/
+
+# IDE
+.vscode/
+.idea/
+
+# Local credentials
+*.pem
+*.key
+*.p12
+*.crt

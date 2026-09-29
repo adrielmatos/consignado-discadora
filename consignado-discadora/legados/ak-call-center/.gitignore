@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Next.js
+.next/
+out/
+.turbo/
+
+# Vercel
+.vercel/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+.env*.local
+**/.supabase/functions/.env
+
+# Supabase
+.supabase/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# TypeScript
+*.tsbuildinfo

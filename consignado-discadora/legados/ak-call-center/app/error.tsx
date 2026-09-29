@@ -1,0 +1,6 @@
+"use client";
+import {useEffect} from "react";
+export default function GlobalError({error,reset}:{error:Error&{digest?:string};reset:()=>void}){
+ useEffect(()=>{console.error("[AK-CC][GLOBAL_ERROR]",{message:error.message,digest:error.digest,stack:error.stack})},[error]);
+ return <main style={{minHeight:"100vh",display:"grid",placeItems:"center",fontFamily:"Inter,system-ui,sans-serif",background:"#f4f7fb",padding:20}}><section style={{maxWidth:560,background:"#fff",border:"1px solid #e2e9f1",borderRadius:18,padding:28,boxShadow:"0 12px 34px rgba(17,35,59,.07)"}}><b style={{color:"#146bd8"}}>A&K CALL CENTER</b><h1 style={{fontSize:26}}>Ocorreu um erro inesperado</h1><p style={{color:"#718198",lineHeight:1.6}}>O erro foi registrado no console do navegador. Tente novamente; se persistir, envie o horário e esta mensagem para auditoria.</p><button onClick={()=>reset()} style={{border:0,borderRadius:10,padding:"11px 15px",background:"#146bd8",color:"#fff",fontWeight:700}}>Tentar novamente</button></section></main>
+}

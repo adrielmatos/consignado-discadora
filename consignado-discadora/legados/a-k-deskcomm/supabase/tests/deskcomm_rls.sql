@@ -1,0 +1,12 @@
+begin;
+select plan(8);
+select ok(row_security_active('public.contacts'),'contacts RLS enabled');
+select ok(row_security_active('public.leads'),'leads RLS enabled');
+select ok(row_security_active('public.audit_logs'),'audit RLS enabled');
+select ok(row_security_active('public.ai_agents'),'AI RLS enabled');
+select ok(not has_table_privilege('anon','public.contacts','select'),'anon cannot select contacts');
+select ok(not has_table_privilege('anon','public.leads','insert'),'anon cannot insert leads');
+select ok(has_table_privilege('authenticated','public.contacts','select'),'authenticated can reach contacts');
+select ok(not has_table_privilege('anon','public.audit_logs','select'),'anon cannot select audit');
+select * from finish();
+rollback;

@@ -1,0 +1,30 @@
+{
+  "name": "ak-call-center",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.0",
+    "next": "^15.5.0",
+    "papaparse": "^5.5.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "xlsx": "npm:@stackline/xlsx@1.0.7",
+    "@supabase/ssr": "^0.7.0",
+    "zod": "^4.1.0"
+  },
+  "overrides": {
+    "postcss": "^8.5.24"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/papaparse": "^5.3.16",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.8.0"
+  }
+}

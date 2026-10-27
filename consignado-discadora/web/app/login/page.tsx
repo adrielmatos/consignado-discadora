@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { entrar } from "./acoes";
 
 export const dynamic = "force-dynamic";
@@ -8,8 +9,11 @@ export default async function PaginaLogin(props: {
   const { erro, msg } = await props.searchParams;
 
   return (
-    <div style={{ maxWidth: 420, margin: "40px auto" }}>
-      <h1>Entrar</h1>
+    <div style={{ maxWidth: 420, margin: "40px auto", padding: "0 16px" }}>
+      <Link href="/" style={{ display: "inline-block", marginBottom: 24, fontSize: 13, color: "#93a0b5" }}>
+        ← Voltar para o site
+      </Link>
+      <h1>Entrar no Sistema</h1>
       <p className="mudo">
         Acesso por link mágico (Supabase Auth). O e-mail precisa existir como usuário do projeto —
         crie em Authentication → Users. O mesmo e-mail deve estar na tabela <code>agentes</code>.

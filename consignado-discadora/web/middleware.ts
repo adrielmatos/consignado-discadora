@@ -1,10 +1,12 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// /api/leads é a porta do webhook de lead: o visitante do site não tem sessão.
-// O que protege aquela rota é o token da campanha + as regras da fn_receber_lead_webhook
-// (consentimento, bloqueio, volume) — não o cookie.
-const ROTAS_LIVRES = ["/login", "/auth", "/icon", "/api/leads"];
+// Rotas públicas que não exigem autenticação prévia:
+// - "/" é a Landing Page institucional para visitantes
+// - "/login" e "/auth" para login e callback de link mágico
+// - "/api/leads" para entrada de leads por webhook (protegida por token)
+// - "/assets" e "/mockups" para os arquivos estáticos da landing
+const ROTAS_LIVRES = ["/", "/login", "/auth", "/icon", "/api/leads", "/assets", "/mockups"];
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
@@ -36,21 +38,27 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const path = new URL(request.url).pathname;
-  const livre = ROTAS_LIVRES.some((r) => path.startsWith(r));
+  const livre = ROTAS_LIVRES.some((r) => (r === "/" ? path === "/" : path.startsWith(r)));
 
+  // Se não está autenticado e a rota é restrita, redireciona para login
   if (!user && !livre) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
-  if (user && path === "/login") {
+
+  // Se já está autenticado e tenta acessar o login ou a landing page, manda direto para o painel
+  if (user && (path === "/login" || path === "/")) {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
+    url.pathname = "/painel";
     return NextResponse.redirect(url);
   }
+
   return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|css|js)$).*)",
+  ],
 };
